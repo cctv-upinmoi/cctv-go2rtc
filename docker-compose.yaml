@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  go2rtc:
+    image: alexxit/go2rtc
+    container_name: cctv-go2rtc
+    ports:
+      - "1984:1984"   # Web UI
+      - "8554:8554"   # RTSP
+      - "8555:8555"   # WebRTC
+    volumes:
+      - ./go2rtc.yaml:/config/go2rtc.yaml
