@@ -1,0 +1,19 @@
+services:
+  go2rtc:
+    image: ${DOCKER_NAME}/cctv-go2rtc:latest
+    container_name: cctv-go2rtc
+    restart: unless-stopped
+    ports:
+      - "${GO2RTC_API_PORT:-1984}:1984"   # Web UI / API
+      - "${GO2RTC_RTSP_PORT:-8554}:8554"  # RTSP
+      - "${GO2RTC_WEB_PORT:-8555}:8555"   # WebRTC
+    volumes:
+      # Mount custom config to override camera streams
+      - ${GO2RTC_CONFIG:-./go2rtc.yaml}:/config/go2rtc.yaml
+    networks:
+      - cctv-network
+
+networks:
+  cctv-network:
+    name: cctv-network
+    driver: bridge
